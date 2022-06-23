@@ -2,7 +2,7 @@
 
 ## 核心模块
 
-- [Buffer](./core/buffer/README.md)
+- [Buffer](core/buffer/README.md)
 - [Child Process](./core/child_process/README.md)
 - [Cluster](./core/cluster/README.md)
 - [File system](./core/fs/README.md)
