@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const data = {
+        query: `
+          # 这里 query 如果直接是个对象，默认会包裹上 query {}
+          query {
+            articles {
+              id
+              title
+              content
+            }
+          }
+        `,
+      };
+      // const data = {
+      //   query: `
+      //     mutation createArticle($article: CreateArticleInput) {
+      //       createArticle(article: $article) {
+      //         id
+      //         title
+      //         content
+      //       }
+      //     }
+      //   `,
+      //   variables: {
+      //     article: {
+      //       title: "aaa",
+      //       content: "bbb",
+      //     },
+      //   },
+      // };
+
+      fetch("http://localhost:4000/graphql", {
+        method: "POST", // graphql 必须是 post
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+        });
+    </script>
+  </body>
+</html>
