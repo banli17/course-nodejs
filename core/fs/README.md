@@ -66,3 +66,5 @@ fs.stat(filepath, (err, stats) => {
 ```
 
 - <https://nodejs.dev/learn/nodejs-file-stats>
+
+## 可读流

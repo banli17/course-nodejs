@@ -2,6 +2,7 @@ const cluster = require('cluster')
 const path = require('path')
 const os = require('os')
 
+// isMaster 废弃了，用 isPrimary
 if (cluster.isMaster) {
   const cpuLen = os.cpus().length
   for (let i = 0; i < 1; i++) {
@@ -26,7 +27,7 @@ if (cluster.isMaster) {
     })
   }
 
-  cluster.on('exit', code => {
+  cluster.on('exit', (code) => {
     if (code === 1) {
       setTimeout(() => {
         cluster.fork()
