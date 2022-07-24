@@ -3,7 +3,7 @@ const cp = require('child_process')
 
 // 主要执行 shell, 本质上是执行的 execFile
 // 第二个参数是个对象 { timeout: ...}
-cp.exec('ls -al | grep node_modules', (err, stdout, stderr) => {
+cp.exec('lsa -al | grep node_modules', (err, stdout, stderr) => {
   console.log(err, stdout, stderr)
   // null drwxr-xr-x  64 banli  staff   2048 Jun 28 22:55 node_modules
 })
@@ -25,6 +25,9 @@ cp.execFile(
 // exec execFile fork 底层都是 spawn
 const child = cp.spawn('node', [path.resolve(__dirname, '1.test.js'), '-a'], {
   cwd: path.resolve(__dirname),
+  // stdio: 'pipe'
+  // 默认的 stdio 为 pipe，会和父进程建立管道，然后通过 stdout.on() 进行监听
+  // 如果为 inherit ，默认会将数据传递给父进程
 })
 console.log('spawn pid', child.pid, child)
 

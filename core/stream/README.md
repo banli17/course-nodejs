@@ -42,7 +42,7 @@ Nodejs 中的流是处理流式数据的抽象接口。
 自定义可读流
 
 - 继承自 stream 里的 Readable
-- 重写 \_read 方法调用 push 产出数据
+- 重写 `_read` 方法调用 push 产出数据
 
 问题：
 

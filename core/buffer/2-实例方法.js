@@ -20,24 +20,29 @@ console.log('len', len); // 3
 console.log(b1); // <Buffer 31 32 32 32 35 36>
 console.log(b1.toString()); // 122256
 
-b2 = Buffer.from('你好啊')
+const b2 = Buffer.from('你好啊')
 console.log(b2);
 console.log(b2.toString('utf-8', 3, 6)); //好 toString(ecode, start, end)
 
 // slice
 console.log(b2.slice(3).toString()); // 好啊
 console.log(b2.slice(-3).toString()); // 啊
+const b2copy = b2.slice(0)
+
+b2[0] = 'a'
+console.log('b2copy', b2copy);
+
 
 // indexOf
-b5 = Buffer.from('hello你好啊, 哎你好啊')
+const b5 = Buffer.from('hello你好啊, 哎你好啊')
 console.log(b5);
 console.log(b5.indexOf('好')); // 8
 console.log(b5.indexOf('好', 10)); // 22
 
 
 // copy(source, sourceStart, distStart, distEnd)
-b3 = Buffer.from("你好啊")
-b4 = Buffer.alloc(9)
+const b3 = Buffer.from("你好啊")
+const b4 = Buffer.alloc(9)
 b3.copy(b4, 3, 3, 6) // b3 拷贝到 b4
 console.log(b4);
 console.log(b4.toString());
