@@ -1,0 +1,180 @@
+# NodeJs 简介
+
+## 安装
+
+- [https://nodejs.dev/download/](https://nodejs.dev/download/)
+- [nvm](https://github.com/nvm-sh/nvm)
+
+## 运行 nodejs
+
+1、通过 node 命令
+
+```
+node app.js
+```
+
+2、通过 shebang，在 js 文件顶部增加:
+
+```
+#!/usr/bin/env node
+```
+
+然后，执行 `./app.js`，此时会提示需要权限，通过 `chmod u+x app.js` 解决。
+
+![](imgs/2022-08-04-21-59-54.png)
+
+## 自动重启 Node 程序
+
+```sh
+npm i -g nodemon
+
+nodemon app.js
+```
+
+## 退出 Node 程序
+
+1、前台运行情况下，可以通过 ctrl + c 结束
+
+2、process.exit(code)，可以传 code，通常 code=1 表示正常结束
+
+3、`process.exitCode = 1` 设置该属性后，程序结束时，会返回该退出码
+
+4、可以通过向命令发送信号退出
+
+```js
+process.on('SIGTERM', () => {
+  server.close()
+})
+
+process.kill(process.pid, 'SIGTER')
+```
+
+`SIGTERM` 表示优雅的退出，会等挂起或正在处理的请求处理完成再退出。
+
+`SIGKILL`告诉进程立即终止，理想情况下，和 `process.exit()` 一样。
+
+## 读取环境变量
+
+通常传递给 node 环境变量的方式如下：
+
+```sh
+USER_ID=200 USER_KEY=foo node app.js
+```
+
+node 会自动将它挂在 process.env 上。
+
+```js
+process.env.USER_ID // 200
+process.env.USER_KEY // foo
+```
+
+## 读取命令行参数
+
+`process.argv` 数组存储了命令参数。
+
+第一个参数是 node 命令路径，第二个参数是执行脚本路径，
+
+```
+A=1 node app.js name=zhangsan age=12
+```
+
+```
+0: /Users/banli/.nvm/versions/node/v14.18.1/bin/node
+1: /Users/banli/Desktop/course/course-nodejs/core/basic/app.js
+2: name=zhangsan
+3: age=12
+```
+
+通过 `process.argv.slice(2)` 获取后面的参数，要解析参数，可以使用库 `minimist`。
+
+```js
+import minimist from minimist;
+const ret = minimist(process.argv.slice(2))
+```
+
+## 打印信息
+
+console.log 如果传入对象，将会打印字符串。
+
+可以通过传递变量和格式说明符来格式化漂亮的短语。
+
+```js
+console.log('My %s has %d ears', 'cat', 2)
+```
+
+- %s 将变量格式化为字符串
+- %d 将变量格式设置为数字
+- %i 将变量格式化为其整数部分
+- %o 将变量格式化为对象
+
+```
+console.log('%o', Number);
+```
+
+![](imgs/2022-08-04-22-39-37.png)
+
+console.clear() 清除控制台（行为可能取决于所使用的控制台）。
+
+console.count(str) 打印字符串次数，str 默认是 'default'。
+
+console.countRest(str) 重置计数
+
+console.trace() 打印堆栈信息
+
+```
+const function2 = () => console.trace();
+const function1 = () => function2();
+function1();
+```
+
+将打印如下内容：
+
+```
+Trace
+    at function2 (repl:1:33)
+    at function1 (repl:1:25)
+    at repl:1:1
+    at ContextifyScript.Script.runInThisContext (vm.js:44:33)
+    at REPLServer.defaultEval (repl.js:239:29)
+    at bound (domain.js:301:14)
+    at REPLServer.runBound [as eval] (domain.js:314:12)
+    at REPLServer.onLine (repl.js:440:10)
+    at emitOne (events.js:120:20)
+    at REPLServer.emit (events.js:210:7)
+```
+
+计算花费的时间
+
+console.time(str)
+console.timeEnd(str)
+
+标准 stdout 和 stderr
+
+console.log 会输出到 stdout
+console.error 会输出到 stderr
+
+打印颜色
+
+https://gist.github.com/iamnewton/8754917
+
+```js
+console.log('\x1b[33m%s\x1b[0m', 'hi!')
+```
+
+简单的方式是使用 [Chalk](https://github.com/chalk/chalk) 库。
+
+打印进度条
+
+[Progress](https://www.npmjs.com/package/progress)
+
+```js
+impor ProgressBar from 'progress'
+
+const bar = new ProgressBar(':bar', { total: 10 });
+const timer = setInterval(() => {
+  bar.tick();
+  if (bar.complete) {
+    clearInterval(timer);
+  }
+}, 100);
+```
