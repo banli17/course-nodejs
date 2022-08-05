@@ -178,3 +178,94 @@ const timer = setInterval(() => {
   }
 }, 100);
 ```
+
+## 命令行交互
+
+node v7 新增了 readline 模块用于实现它：用于接收可读流，比如 process.stdin，每次接收一行。
+
+简单的方式是通过 [readline-sync 包](https://www.npmjs.com/package/readline-sync)。
+
+更好的解决方法是 inquirer 包。
+
+## 导出
+
+```
+exports
+module.exports
+require
+```
+
+## npm
+
+npm 是 Node.js 标准的包管理工具
+
+> yarn 和 pnpm 是 npm cli 的替代品
+
+安装包
+
+```
+npm install
+npm install <package-name>
+```
+
+- `-D, --save-dev` 会添加到 devDependencies 里
+- `--no-save`
+- `-O, --save-optional`: 会安装到 optionDependencies 里
+- `-S, --save`
+- `--no-optional`
+
+更新包
+
+```
+npm update
+npm update <package-name>
+```
+
+版本控制 semver
+
+```
+npm i <package-name>@<version>
+```
+
+运行任务
+
+```
+npm run <task-name>
+```
+
+```json
+{
+  "scripts": {
+    "start-dev": "node lib/server-development",
+    "start": "node lib/server-production"
+  }
+}
+```
+
+
+包安装在哪里
+
+```
+npm i  # 在本地 node_modules 下
+npm i -g  # 在全局 node_modules 下，通过 npm root -g 查看
+
+npm root -g
+# macos /Users/banli/.nvm/versions/node/v14.18.1/lib/node_modules
+# windows C:\Users\YOU\AppData\Roaming\npm\node_modules
+```
+
+package.json: 工具配置的中央存储库，也存储安装包名称和版本信息。
+
+
+```
+version表示当前版本
+name设置应用程序/包名称, 少于 214 个字符，只能是小写字母、-_, 因为发布到线上会根据它获取 url
+description是应用/程序包的简要说明
+main设置应用程序的入口点
+private如果设置为防止应用/程序包意外发布在truenpm
+scripts定义了一组可以运行的节点脚本
+dependencies设置作为依赖项安装的包的列表npm
+devDependencies设置作为开发依赖项安装的包的列表npm
+engines设置此包/应用适用于哪些版本的 Node.js
+browserslist用于告诉您要支持的浏览器（及其版本）
+```

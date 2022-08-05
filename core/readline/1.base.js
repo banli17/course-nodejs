@@ -6,6 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
+// question 方法会显示第一个参数，然后等待用户的额输入，直到按下回车
 // const answer = await rl.question(`what do you think of Node.js?`)
 
 // console.log(`Thank you for you feedback ${answer}`)
