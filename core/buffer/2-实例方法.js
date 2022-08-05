@@ -1,6 +1,6 @@
 let b1 = Buffer.alloc(6)
 
-// fill(data[, start])
+//  fill(data[, start])
 b1.fill('12', 1)
 console.log(b1); // <Buffer 00 00 31 32 31 32>
 console.log(b1.toString('utf-8')); // 12121
