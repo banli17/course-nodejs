@@ -1,4 +1,8 @@
-const path = require('path')
+import path from 'path'
+import { URL } from 'url'
+
+const __filename = new URL('', import.meta.url).pathname
+const __dirname = new URL('.', import.meta.url).pathname
 
 console.log(__filename)
 
@@ -51,12 +55,14 @@ console.log(path.join('')) // . 当前工作目录
 console.log(path.normalize('a/b/cd')) // a/b/cd
 console.log(path.normalize('a/b/c///d')) // a/b/c/d
 console.log(path.normalize('a/b/c/../d')) // a/b/d
-console.log(path.normalize('a/\b/c')) // a//d
+console.log(path.normalize('a/\b/c')) // a//c
+console.log(path.normalize('http://a.com/\b/c')) // http:/a.com//c
 
 // 9. 绝对路径 resolve([form], to) 将 to 变成绝对目录，如果不是，会加上 cwd 目录
 console.log(path.resolve()) // cwd 目录
 console.log(path.resolve('/a', '/b')) // /b
 console.log(path.resolve('/a', 'b')) // /a/b
+console.log(path.resolve('/users/joe/..//test.txt')) // /users/test.txt
 
 // 在 course-nodejs 目录执行 node core/path/1.js
 console.log(path.resolve('a')) // /Users/banli/Desktop/course/course-nodejs/a

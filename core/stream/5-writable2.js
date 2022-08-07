@@ -1,6 +1,5 @@
-const {
-  Writable
-} = require('stream')
+import { Writable } from 'stream'
+import '../global.js'
 
 class MyWritable extends Writable {
   constructor() {
@@ -9,6 +8,7 @@ class MyWritable extends Writable {
 
   // en 编码
   _write(chunk, en, done) {
+    console.log(chunk)
     process.stdout.write(chunk.toString() + '<---')
     process.nextTick(done)
   }
@@ -17,6 +17,5 @@ class MyWritable extends Writable {
 const mw = new MyWritable()
 
 mw.write('你好啊', 'utf-8', () => {
-  console.log('end');
+  console.log('end')
 })
-

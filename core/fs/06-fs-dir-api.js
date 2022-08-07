@@ -1,5 +1,8 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
+import { URL } from 'url'
+
+const __dirname = new URL('.', import.meta.url).pathname
 
 const newsFile = path.resolve(__dirname, './news.txt')
 
@@ -21,6 +24,7 @@ fs.stat(newsFile, (err, statObj) => {
   console.log(statObj.size); // 228  字节
   console.log(statObj.isFile()); // true
   console.log(statObj.isDirectory()); // false
+  console.log(statObj.isSymbolicLink())
 })
 
 // 3 mkdir 它相当于是创建 basename 目录

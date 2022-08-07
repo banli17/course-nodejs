@@ -1,5 +1,8 @@
-const path = require('path')
-const fs = require('fs')
+import fs from 'fs'
+import path from 'path'
+import { URL } from 'url'
+
+const __dirname = new URL('.', import.meta.url).pathname
 
 // readFile
 // 如果路径不存在会报错
@@ -15,10 +18,10 @@ const fs = require('fs')
 // 如果路径不存在, 会创建文件, 默认是 utf-8 编码, w+(清空再写入)
 fs.writeFile(
   path.join(__dirname, 'data.txt'),
-  '123',
+  'bbb',
   {
     mode: 438, // rw
-    flag: 'r+', // 不清空，直接从开头写入（覆盖）, 即原文件 hello 会变成 123lo
+    flag: 'w+', // 不清空，直接从开头写入（覆盖）, 即原文件 hello 会变成 123lo
     encoding: 'utf-8',
   },
   (err) => {
@@ -57,3 +60,6 @@ fs.watchFile(
     }
   }
 )
+
+// 附加内容
+// fs.appendFile(url, content, callback)

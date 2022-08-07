@@ -242,7 +242,6 @@ npm run <task-name>
 }
 ```
 
-
 包安装在哪里
 
 ```
@@ -256,7 +255,6 @@ npm root -g
 
 package.json: 工具配置的中央存储库，也存储安装包名称和版本信息。
 
-
 ```
 version表示当前版本
 name设置应用程序/包名称, 少于 214 个字符，只能是小写字母、-_, 因为发布到线上会根据它获取 url
@@ -269,3 +267,106 @@ devDependencies设置作为开发依赖项安装的包的列表npm
 engines设置此包/应用适用于哪些版本的 Node.js
 browserslist用于告诉您要支持的浏览器（及其版本）
 ```
+
+## nextTick
+
+每次事件循环一次，叫做一个 tick。
+
+process.nextTick() 接收一个函数，引擎会在当前操作结束时，下一次事件循环的开始，去执行函数。
+
+这是一种异步的方式。
+
+setTimeout() 会在下次 tick 最后执行，比 process.nextTick() 后执行。
+
+## setImmediate
+
+事件循环顺序是：先执行 process.nextTick 队列，再执行 promise 微任务队列，再执行宏任务队列。
+
+事件循环是针对引擎来说的，每次 v8 执行 js 代码执行都是一轮 tick。
+
+setImmediate 会放在宏任务前面。
+
+![](imgs/2022-08-06-12-53-00.png)
+
+“事件循环”只是一种编程模式，V8 允许插入外部事件循环实现以使用其 JavaScript 运行时。利用这种灵活性，Chrome 浏览器使用 libevent 作为其事件循环实现，NodeJS 使用 libuv 实现事件循环
+
+## 学习 Promise
+
+静态方法
+
+- Promise.reject()
+- Promise.all()
+- Promise.any(): 会
+
+async await
+
+## EventEmitter
+
+- on()
+- emit()
+- once()
+- removeListener() /off()
+- removeAllListeners()
+
+## 创建 http 服务
+
+```js
+http.createServe((req, res) => {})
+```
+
+当每次收到请求时，会执行回调函数，并会传递两个参数对象：request(一个 http.IncomingMessage 对象) 和 response (一个 http.ServerResponse 对象)。
+
+```js
+res.statusCode = 200 // 设置状态码
+res.setHeader('Content-Type', 'text/html') // 设置响应头
+res.end(`<h1>hello world</h1>`) // 返回数据
+```
+
+如何发送请求 http.request
+如何获取请求数据(get、post)
+
+## 获取文件状态
+
+## 文件路径
+
+路径格式的不同
+
+```sh
+# linux/macOS
+/users/joe/file.txt
+
+# windows
+C:\users\joe\file.txt
+```
+
+- path.resolve()
+- path.normalize()
+- path.join()
+
+## 读文件
+
+```js
+fs.readFile(url, options, callback)
+
+fs.readFile(url, 'utf8', callback)
+fs.readFile(url, { encoding: 'utf8' }, callback)
+```
+
+## 写文件
+
+```
+fs.writeFile('/Users/joe/test.txt', content, { flag: 'a+' }, err => {});
+```
+
+## 环境
+
+为了区分 development 和 prodcution，可以设置 process.env.NODE_ENV
+
+```
+NODE_ENV node app.js
+```
+
+一般框架里，如 express 里会区分这些模式, production 下会:
+
+- 减少打印日志
+- 性能优化
