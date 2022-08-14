@@ -7,7 +7,7 @@
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "调试",
             "skipFiles": [ // 这里 skipFiles 字段要保留才行
               // "<node_internals>/**"
             ],
